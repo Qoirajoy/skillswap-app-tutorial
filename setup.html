@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup - SkillSwap Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#db2777',
+                        cream: '#ffffff',
+                        paper: '#fff5f8',
+                        ink: '#1f2937',
+                        heading: '#831843',
+                        coral: '#ec4899',
+                        gold: '#f9a8d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="site-nav" aria-label="Tutorial">
+        <a href="index.html" class="logo">Skill<span>Swap</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Introduction</a></li>
+            <li><a href="setup.html" class="current">Setup</a></li>
+            <li><a href="build.html">Build</a></li>
+            <li><a href="deploy.html">Deploy</a></li>
+            <li><a href="reference.html">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary mb-2">Page 2 of 5</p>
+        <h1>Prerequisites and setup</h1>
+        <p class="lede mt-4">You are gathering ingredients before you cook. None of this is coding. You are creating free accounts and installing two programs so Cursor can build SkillSwap on your computer.</p>
+
+        <section id="accounts" class="mt-12">
+            <h2>2.1 Create your accounts</h2>
+            <p class="mt-4">Three websites. Sign up with an email you actually check — login codes for SkillSwap will arrive there later too, if you use the same address.</p>
+
+            <h3 class="mt-8">GitHub account</h3>
+            <p class="mt-3"><strong>What it is:</strong> a website where developers store and share code.</p>
+            <p class="mt-3"><strong>Why you need it:</strong> SkillSwap’s files will live here. Vercel will watch this folder and put new versions online automatically.</p>
+            <ol class="pretty mt-4">
+                <li>Go to <a href="https://github.com" target="_blank" rel="noopener">github.com</a></li>
+                <li>Click Sign up and verify your email</li>
+                <li>Choose a professional username. It will appear in URLs, such as <code>github.com/yourname/skillswap</code></li>
+            </ol>
+
+            <h3 class="mt-8">Vercel account</h3>
+            <p class="mt-3"><strong>What it is:</strong> a service that hosts web apps — it puts them on the internet.</p>
+            <p class="mt-3"><strong>Why you need it:</strong> Vercel takes your code from GitHub and gives you a public link, with https included. The free Hobby plan is enough.</p>
+            <ol class="pretty mt-4">
+                <li>Go to <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></li>
+                <li>Sign up with GitHub (this connects the two accounts)</li>
+                <li>Authorize access when GitHub asks</li>
+            </ol>
+
+            <h3 class="mt-8">Supabase account</h3>
+            <p class="mt-3"><strong>What it is:</strong> your backend. It stores SkillSwap data and handles student accounts.</p>
+            <p class="mt-3"><strong>Why you need it:</strong> without Supabase, Maya’s request would live only in her browser. With it, Alex can see that request from another laptop.</p>
+            <ol class="pretty mt-4">
+                <li>Go to <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a></li>
+                <li>Sign up and verify your email</li>
+            </ol>
+        </section>
+
+        <section id="supabase-project" class="mt-14">
+            <h2>2.2 Create your Supabase project</h2>
+            <p class="mt-4">An account is your login. A <strong>project</strong> is the actual kitchen for SkillSwap — one database, one set of user accounts.</p>
+            <ol class="pretty mt-4">
+                <li>Go to the <a href="https://supabase.com/dashboard" target="_blank" rel="noopener">Supabase dashboard</a></li>
+                <li>Click <strong>New Project</strong></li>
+                <li>Name it <code>skillswap</code> (or something you will recognize later)</li>
+                <li>Set a database password and save it somewhere safe. You will not need it for this bootcamp, but you cannot recover it later from the dashboard.</li>
+                <li>Choose a region close to you and click <strong>Create new project</strong>. Wait 1–2 minutes.</li>
+                <li>Open <strong>Project Settings → API</strong>. You need two values:
+                    <ul class="pretty mt-2">
+                        <li><strong>Project URL</strong> — looks like <code>https://abcdefghijk.supabase.co</code></li>
+                        <li><strong>Publishable key</strong> — a long string, often starting with <code>sb_publishable_</code></li>
+                    </ul>
+                </li>
+            </ol>
+            <div class="callout mt-6">
+                <p class="callout-title">What are the Project URL and Publishable key?</p>
+                <p>Think of the Project URL like a mailing address for your database. When SkillSwap wants to read or write a help request, it needs to know where to send the letter.</p>
+                <p class="mt-3">The Publishable key is public. It is safe to include in frontend code. It is not a password. Supabase uses Row Level Security — rules on each table — to decide who can actually read or write. Think of it like your home address: it is public information, but that does not mean anyone can walk into your house.</p>
+                <p class="mt-3">If the dashboard also shows a secret or <code>service_role</code> key, <strong>do not copy that one</strong>. It bypasses the security rules.</p>
+            </div>
+            <ol class="pretty mt-6" start="7">
+                <li>Copy both values into a notes app or a text file. You will paste them into the build prompt.</li>
+                <li>Keep the Supabase dashboard tab open. You will come back to it.</li>
+            </ol>
+        </section>
+
+        <section id="nodejs" class="mt-14">
+            <h2>2.3 Install Node.js</h2>
+            <div class="callout mt-4">
+                <p class="callout-title">What is Node.js?</p>
+                <p>When students use SkillSwap, the app runs in <em>their</em> browsers. While you are building it, you also need to run code on <em>your</em> computer — to preview the site, install packages, and prepare a deploy. Node.js is the translator that lets your computer understand JavaScript, the language this app is written in.</p>
+            </div>
+            <ol class="pretty mt-6">
+                <li>Go to <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a></li>
+                <li>Download the <strong>LTS</strong> version (Long Term Support — the stable one)</li>
+                <li>Run the installer and accept the defaults</li>
+                <li>Verify it worked: open your terminal and type <code>node --version</code>. You should see a version number.</li>
+            </ol>
+            <pre><code class="language-bash">node --version</code></pre>
+            <div class="callout mt-6">
+                <p class="callout-title">What is a terminal?</p>
+                <p>The terminal (also called the command line) is a text-based way to give instructions to your computer. Instead of clicking icons, you type commands. It looks intimidating at first. You will only need a few simple ones, and Cursor will often run them for you.</p>
+                <ul class="pretty mt-3">
+                    <li><strong>Windows:</strong> open PowerShell or Command Prompt from the Start menu</li>
+                    <li><strong>Mac:</strong> open the Terminal app from Spotlight</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="cursor" class="mt-14">
+            <h2>2.4 Install Cursor</h2>
+            <div class="callout mt-4">
+                <p class="callout-title">What is Cursor?</p>
+                <p>Cursor is a code editor — a special text editor designed for writing code. Unlike a regular editor, it has a built-in AI assistant. You describe SkillSwap in plain English. It writes the files. You are directing the AI, not typing React yourself.</p>
+            </div>
+            <ol class="pretty mt-6">
+                <li>Go to <a href="https://cursor.com" target="_blank" rel="noopener">cursor.com</a></li>
+                <li>Download and install Cursor</li>
+                <li>Open it and finish the setup wizard</li>
+                <li>Sign in or create an account when prompted</li>
+            </ol>
+        </section>
+
+        <section id="cursor-docs" class="mt-14">
+            <h2>2.5 Configure Cursor for this project</h2>
+            <p class="mt-4">Cursor already knows a lot about code, but it has a knowledge cutoff. It does not automatically know last month’s Supabase changes. Adding official docs gives the AI a current cheat sheet for authentication, database queries, and Next.js setup. Better docs → better SkillSwap code.</p>
+            <p class="mt-4"><strong>When this helps:</strong> tools with recent API changes, or when suggestions look outdated.</p>
+            <p class="mt-4"><strong>When it is less necessary:</strong> very common tools (basic React, everyday JavaScript).</p>
+            <p class="mt-4">Add all three sources this bootcamp uses:</p>
+            <ol class="pretty mt-4">
+                <li>Open Cursor Settings (<kbd>Ctrl+,</kbd> on Windows, <kbd>Cmd+,</kbd> on Mac)</li>
+                <li>Go to <strong>Features → Docs</strong></li>
+                <li>Click <strong>Add Doc</strong> and enter each URL, one at a time:
+                    <ul class="pretty mt-2">
+                        <li><a href="https://supabase.com/docs" target="_blank" rel="noopener">https://supabase.com/docs</a></li>
+                        <li><a href="https://nextjs.org/docs" target="_blank" rel="noopener">https://nextjs.org/docs</a></li>
+                        <li><a href="https://tailwindcss.com/docs" target="_blank" rel="noopener">https://tailwindcss.com/docs</a></li>
+                    </ul>
+                </li>
+                <li>Wait for indexing to finish. You should see the names appear in your docs list.</li>
+            </ol>
+            <p class="mt-6">You now have accounts, a database address, Node.js, and a configured editor. Next you will open an empty folder and ask Cursor to build SkillSwap.</p>
+        </section>
+
+        <nav class="page-footer" aria-label="Page">
+            <a href="index.html">← Back: Introduction</a>
+            <a href="build.html">Next: Build →</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

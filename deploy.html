@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy - SkillSwap Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#db2777',
+                        cream: '#ffffff',
+                        paper: '#fff5f8',
+                        ink: '#1f2937',
+                        heading: '#831843',
+                        coral: '#ec4899',
+                        gold: '#f9a8d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="site-nav" aria-label="Tutorial">
+        <a href="index.html" class="logo">Skill<span>Swap</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Introduction</a></li>
+            <li><a href="setup.html">Setup</a></li>
+            <li><a href="build.html">Build</a></li>
+            <li><a href="deploy.html" class="current">Deploy</a></li>
+            <li><a href="reference.html">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary mb-2">Page 4 of 5</p>
+        <h1>Put SkillSwap on the internet</h1>
+        <p class="lede mt-4">Right now only your laptop can serve the app. Deployment moves SkillSwap onto a computer that stays on, so a classmate can open it from their phone at 11 p.m.</p>
+
+        <section id="what-is-deploy" class="mt-12">
+            <h2>4.1 What is deployment?</h2>
+            <div class="callout mt-4">
+                <p>If you close your laptop, <code>localhost:3000</code> disappears. Deployment means putting the app on a <strong>server</strong> — a computer that is always on — so anyone with the URL can use it.</p>
+                <p class="mt-3">You will use <a href="https://vercel.com" target="_blank" rel="noopener">Vercel</a> because:</p>
+                <ul class="pretty mt-2">
+                    <li>It is free for personal projects (Hobby plan)</li>
+                    <li>It rebuilds automatically when you update GitHub</li>
+                    <li>The same team built Next.js, so the two fit together</li>
+                </ul>
+            </div>
+            <p class="mt-6">The path is: your computer → GitHub (the filing cabinet) → Vercel (the building). Students never visit GitHub to use the app. They visit the Vercel URL.</p>
+        </section>
+
+        <section id="github" class="mt-14">
+            <h2>4.2 Push your code to GitHub</h2>
+            <p class="mt-4">GitHub is not the live site. It is the official copy of your files. Vercel will pull from there.</p>
+            <ol class="pretty mt-4">
+                <li>Go to <a href="https://github.com" target="_blank" rel="noopener">github.com</a> and sign in</li>
+                <li>Click the <strong>+</strong> button → <strong>New repository</strong></li>
+                <li>Name it <code>skillswap</code> (lowercase, dashes if you need spaces)</li>
+                <li>Keep it <strong>Public</strong> (needed for the simple free hosting path)</li>
+                <li>Do not check README, .gitignore, or license — Cursor already created project files</li>
+                <li>Click <strong>Create repository</strong> and leave that tab open</li>
+            </ol>
+            <p class="mt-4">Now, in Cursor:</p>
+            <ol class="pretty mt-3">
+                <li>Open the terminal (<strong>View → Terminal</strong>)</li>
+                <li>Ask Agent: “Please help me push this project to GitHub. My repository URL is [paste the URL from GitHub]”</li>
+                <li>Follow the git commands it suggests</li>
+                <li>Refresh GitHub. You should see your SkillSwap files — not this tutorial folder, the app folder you opened in Section 3.1</li>
+            </ol>
+            <div class="callout mt-6">
+                <p class="callout-title">Two different folders</p>
+                <p>This tutorial site (the pages you are reading) can live in its own GitHub repo for GitHub Pages. The SkillSwap Next.js app is a separate project. Deploy the <em>app</em> to Vercel. Host the <em>tutorial</em> on GitHub Pages if you want, using the README in this folder.</p>
+            </div>
+        </section>
+
+        <section id="vercel" class="mt-14">
+            <h2>4.3 Deploy to Vercel</h2>
+            <ol class="pretty mt-4">
+                <li>Go to <a href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a> and sign in with GitHub</li>
+                <li>Click <strong>Add New Project</strong></li>
+                <li>Find and select your <code>skillswap</code> repository</li>
+                <li>Before you deploy, add your Supabase credentials. Click <strong>Environment Variables</strong> and add both:
+                    <ul class="pretty mt-2">
+                        <li>Name: <code>NEXT_PUBLIC_SUPABASE_URL</code> — Value: your Project URL</li>
+                        <li>Name: <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> — Value: your Publishable key</li>
+                    </ul>
+                </li>
+                <li>Click <strong>Deploy</strong> and wait 1–2 minutes</li>
+                <li>When it says congratulations, click the URL. That is live SkillSwap.</li>
+            </ol>
+            <pre><code class="language-bash">NEXT_PUBLIC_SUPABASE_URL=https://your-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key-here</code></pre>
+            <div class="callout mt-6">
+                <p class="callout-title">What are environment variables?</p>
+                <p>Some values should not be hardcoded in files that sit on a public GitHub repo. Environment variables pass those values into the app at build time.</p>
+                <p class="mt-3">The <code>NEXT_PUBLIC_</code> prefix tells Next.js these two values are safe to expose to the browser. The Publishable key is public on purpose. Your real protection is Row Level Security, not hiding the address of the kitchen.</p>
+            </div>
+            <p class="mt-6">After the first deploy, open Supabase → <strong>Authentication → URL Configuration</strong> and add your Vercel URL (for example <code>https://skillswap.vercel.app</code>) as the Site URL and as a Redirect URL. Otherwise login emails will keep sending students back to localhost.</p>
+        </section>
+
+        <section id="live" class="mt-14">
+            <h2>4.4 Your app is live</h2>
+            <p class="mt-4">Congratulations. SkillSwap is on the internet. You can share the URL with friends, open it on your phone, and keep using it when your computer is off.</p>
+            <p class="mt-4"><strong>Automatic updates:</strong> whenever you push new code to GitHub, Vercel rebuilds. That usually takes one or two minutes.</p>
+            <p class="mt-4">A good first live test: create two accounts (you and a friend, or two email addresses). On one, offer Python and request presentation design. On the other, do the reverse. Confirm Matches shows the complementary pair, then express interest.</p>
+        </section>
+
+        <nav class="page-footer" aria-label="Page">
+            <a href="build.html">← Back: Build</a>
+            <a href="reference.html">Next: Reference →</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

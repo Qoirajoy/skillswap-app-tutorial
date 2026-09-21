@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build - SkillSwap Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#db2777',
+                        cream: '#ffffff',
+                        paper: '#fff5f8',
+                        ink: '#1f2937',
+                        heading: '#831843',
+                        coral: '#ec4899',
+                        gold: '#f9a8d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="site-nav" aria-label="Tutorial">
+        <a href="index.html" class="logo">Skill<span>Swap</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Introduction</a></li>
+            <li><a href="setup.html">Setup</a></li>
+            <li><a href="build.html" class="current">Build</a></li>
+            <li><a href="deploy.html">Deploy</a></li>
+            <li><a href="reference.html">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary mb-2">Page 3 of 5</p>
+        <h1>Building SkillSwap</h1>
+        <p class="lede mt-4">This is the fun page. You will open an empty folder, paste one carefully written prompt, and watch Cursor generate the app. You are still the product owner. The prompt is your spec sheet.</p>
+
+        <section id="folder" class="mt-12">
+            <h2>3.1 Create your project folder</h2>
+            <p class="mt-4">Cursor works on whatever folder you open. An empty folder named for the product keeps files easy to find and keeps GitHub URLs clean.</p>
+            <ol class="pretty mt-4">
+                <li>Create a new folder on your computer. Name it <code>skillswap</code> — no spaces, lowercase. Put it on your Desktop or in Documents.</li>
+                <li>Open Cursor.</li>
+                <li>Go to <strong>File → Open Folder</strong> and select that folder.</li>
+                <li>The sidebar should look empty. That is correct.</li>
+            </ol>
+        </section>
+
+        <section id="build-prompt" class="mt-14">
+            <h2>3.2 The build prompt</h2>
+            <p class="mt-4">You are about to ask Cursor to build the entire first version of SkillSwap. The prompt below is already customized for your idea: profiles, skills, requests, offers, complementary matches, and email one-time-code login.</p>
+            <div class="callout mt-6">
+                <p class="callout-title">Before you paste</p>
+                <ul class="pretty mt-2">
+                    <li>Finish <a href="setup.html#supabase-project">Section 2.2</a> and have your Supabase Project URL and Publishable key ready.</li>
+                    <li>If you lost them, open <a href="https://supabase.com/dashboard" target="_blank" rel="noopener">the Supabase dashboard</a> → Project Settings → API.</li>
+                    <li>Never paste the secret <code>service_role</code> key.</li>
+                </ul>
+            </div>
+            <ol class="pretty mt-6">
+                <li>Open Cursor’s Agent (<kbd>Ctrl+I</kbd> on Windows, <kbd>Cmd+I</kbd> on Mac). This is the chat where you describe what you want.</li>
+                <li>Copy the prompt in the box below.</li>
+                <li><strong>Replace</strong> <code>YOUR_SUPABASE_URL_HERE</code> and <code>YOUR_SUPABASE_PUBLISHABLE_KEY_HERE</code> with your real values.</li>
+                <li>Press Enter and let Cursor work.</li>
+            </ol>
+        </section>
+
+        <section id="prompt-box" class="mt-10">
+            <h2>3.3 Your SkillSwap prompt</h2>
+            <p class="mt-3">This is the spec Cursor will follow. Read it once so you know what you asked for, then copy it.</p>
+            <pre><code class="language-markdown">Read these docs before writing any code:
+- https://supabase.com/docs/guides/getting-started/quickstarts/nextjs.md
+- https://vercel.com/docs/frameworks/full-stack/nextjs.md
+
+Build me a Next.js web application. Here are the complete specifications:
+
+## Tech Stack (DO NOT DEVIATE)
+- Next.js with App Router (not Pages Router)
+- TypeScript
+- Tailwind CSS for styling
+- Supabase for database and authentication (use @supabase/ssr and @supabase/supabase-js)
+
+## Supabase Configuration
+My Supabase Project URL is: YOUR_SUPABASE_URL_HERE
+My Supabase Publishable key is: YOUR_SUPABASE_PUBLISHABLE_KEY_HERE
+
+Store these in `.env.local` as:
+
+NEXT_PUBLIC_SUPABASE_URL=YOUR_SUPABASE_URL_HERE
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=YOUR_SUPABASE_PUBLISHABLE_KEY_HERE
+
+Create a browser client at `src/lib/supabase/client.ts` and a server client at `src/lib/supabase/server.ts` using the official Next.js App Router pattern. Follow the Supabase Next.js quickstart linked above.
+
+Use the installed Supabase plugin to create tables and Row Level Security policies. Do not ask me to paste SQL unless the plugin is not connected.
+
+## App Description
+SkillSwap is a university-wide platform that helps students find other students with the skills they need for academic, personal, or extracurricular tasks, while also giving them a place to offer their own skills. Every registered student can create a profile, list skills they can offer, list skills they want to learn, post help requests, post skill offers, and connect with other students. There are no separate helper and requester roles — a student can be both at the same time. Example: Maya (Business) needs presentation design and offers Python; Alex (Engineering) offers presentation design and needs Python. SkillSwap should surface that complementary match.
+
+## Data Model
+Create PostgreSQL tables in Supabase (use the installed Supabase plugin) with these entities:
+
+- `profiles`: id (uuid, same as auth.users id), full_name (text), college (text), major (text), year (text), bio (text), created_at (timestamptz)
+- `profile_skills`: id (uuid), user_id (uuid, references auth.users), skill_name (text), kind (text: "offer" | "want"), proficiency (text: "beginner" | "intermediate" | "advanced"), experience_notes (text), created_at (timestamptz)
+- `posts`: id (uuid), user_id (uuid, references auth.users), post_type (text: "request" | "offer"), skill_name (text), title (text), description (text), status (text: "open" | "closed", default "open"), created_at (timestamptz)
+- `interests`: id (uuid), from_user_id (uuid, references auth.users), to_user_id (uuid, references auth.users), post_id (uuid, nullable, references posts), message (text), status (text: "pending" | "accepted" | "declined", default "pending"), created_at (timestamptz)
+
+And these relationships:
+- Each profile belongs to one authenticated user
+- Each user can have many profile_skills (offers and wants)
+- Each user can create many posts (help requests and skill offers)
+- Each interest is sent by one user to another user and may optionally point at a specific post
+- Matching is computed in the app, not stored as its own table: find users who offer a skill you want and want a skill you offer
+
+Enable Row Level Security on every table.
+- Logged-in users can read all profiles, profile_skills, and open posts so campus-wide discovery works
+- Users can insert, update, and delete only their own profile, skills, and posts
+- Users can insert interests they send (from_user_id = auth.uid()) and read interests where they are the sender or the recipient
+- Users cannot edit someone else's profile, posts, or incoming interests except to update the status of interests sent to them (accept / decline)
+
+## Authentication
+Implement user authentication using Supabase email one-time codes (OTP):
+1. User enters their email
+2. Supabase sends a 6-digit code to that email
+3. User enters the code to log in
+4. Use `supabase.auth.getUser()` / `onAuthStateChange` to check login status
+5. Protect routes that require authentication
+6. After first login, if no profile row exists, prompt the student to complete college, major, year, bio, and at least one skill
+7. Never use the secret (service_role) key in this app
+
+## Pages to Create
+- `/` - Discover: university-wide feed of help requests, skill offers, and students. Search by skill (e.g. Python, Excel, graphic design, public speaking). Filter by college. Login prompt if not authenticated
+- `/login` - Login page with email input and 6-digit code verification
+- `/profile` - The signed-in student's profile editor: name, college, major, year, bio, skills they can offer, skills they want to learn, proficiency, and relevant experience (requires auth)
+- `/profile/[id]` - Public profile for another student
+- `/posts/new` - Form to create a help request or a skill offer (requires auth)
+- `/posts/[id]` - Post details with an Express Interest action
+- `/matches` - Complementary SkillSwap suggestions based on offer/want overlap, with profile links and Express Interest (requires auth)
+- `/my-posts` - Dashboard of the student's own requests and offers, including status (requires auth)
+
+## Core Features
+1. Students create and edit a profile with college, major, year, bio, and self-reported skills
+2. Students add skills they can offer and skills they want, each with proficiency and optional experience notes
+3. Students post help requests describing what they need and the useful skill
+4. Students post skill offers describing what they can help with
+5. Students discover people, requests, and offers by skill search and college filter
+6. Students see potential matches when complementary needs and offers overlap (Maya needs Excel / offers Python; Alex needs Python / offers Excel)
+7. Students express interest in helping or exchanging skills with another student
+8. Students manage the status of their own posts (open / closed)
+
+## UI Requirements
+- Clean, modern, whimsy-professional design using Tailwind CSS: blush pink backgrounds, rose accents, pink skill pills, rounded cards
+- Mobile-responsive (works on phones and desktops)
+- Clear navigation between Discover, Matches, My Posts, Profile, and Login / Logout
+- Loading states while data is being fetched
+- Empty states (for example, "No matches yet — add a skill you can offer and a skill you want")
+- Error messages when something goes wrong
+- No file uploads, chat, payments, maps, AI matching, or email beyond the login code
+
+## File Structure
+Use this structure:
+
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── login/
+│   │   └── page.tsx
+│   ├── profile/
+│   │   ├── page.tsx
+│   │   └── [id]/
+│   │       └── page.tsx
+│   ├── posts/
+│   │   ├── new/
+│   │   │   └── page.tsx
+│   │   └── [id]/
+│   │       └── page.tsx
+│   ├── matches/
+│   │   └── page.tsx
+│   └── my-posts/
+│       └── page.tsx
+├── components/
+│   └── [reusable components]
+└── lib/
+    └── supabase/
+        ├── client.ts
+        └── server.ts
+
+## Getting Started Steps
+1. Create the Next.js app: `npx create-next-app@latest . --tailwind --eslint --app --src-dir --import-alias "@/*" --typescript`
+2. Install Supabase: `npm install @supabase/supabase-js @supabase/ssr`
+3. Create the files listed above
+4. Use the installed Supabase plugin to create tables and Row Level Security policies (only provide SQL for the SQL Editor if the plugin is not connected)
+
+Please create all necessary files with complete, working code.</code></pre>
+        </section>
+
+        <section id="expect" class="mt-14">
+            <h2>3.4 What to expect</h2>
+            <p class="mt-4">Cursor will start creating files in the sidebar. That can take a few minutes. Let it finish. It may ask clarifying questions — answer from your SkillSwap idea (university-wide, dual helper/requester, complementary matches, no chat).</p>
+            <p class="mt-4">Do not worry if:</p>
+            <ul class="pretty mt-3">
+                <li>There are errors at first. You will fix them in a loop with the AI.</li>
+                <li>The code looks overwhelming. You do not need to understand every line.</li>
+                <li>Cursor asks you to run a terminal command. Read it, then let it run or paste it yourself.</li>
+            </ul>
+        </section>
+
+        <section id="local" class="mt-14">
+            <h2>3.5 Running SkillSwap on your computer</h2>
+            <p class="mt-4">“Running locally” means previewing the restaurant in a private dining room before opening to campus.</p>
+            <ol class="pretty mt-4">
+                <li>Open the terminal in Cursor (<strong>View → Terminal</strong>, or <kbd>Ctrl+`</kbd>)</li>
+                <li>Type this command and press Enter:</li>
+            </ol>
+            <pre><code class="language-bash">npm run dev</code></pre>
+            <ol class="pretty mt-4" start="3">
+                <li>Wait until you see something like “Ready” and a URL</li>
+                <li>Open your browser and go to <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a></li>
+                <li>You should see SkillSwap’s Discover page</li>
+            </ol>
+            <div class="callout mt-6">
+                <p class="callout-title">What is localhost?</p>
+                <p>Your app is not on the internet yet. It is running only on this computer. <code>localhost</code> means “this machine.” <code>:3000</code> is a port — think of it as a numbered door. Next.js stands behind door 3000 and serves SkillSwap to your browser.</p>
+            </div>
+            <p class="mt-6">Try the path a real student would take: open login, request a code, finish your profile, post one request and one offer, then check Matches. If the feed is empty, that is normal until you add data.</p>
+        </section>
+
+        <section id="fix" class="mt-14">
+            <h2>3.6 Fixing issues with Cursor</h2>
+            <p class="mt-4">Errors are normal. They are also useful: they tell the AI exactly what broke.</p>
+            <ol class="pretty mt-4">
+                <li>Look at the error in the browser or the terminal</li>
+                <li>Copy the whole message</li>
+                <li>Open Agent (<kbd>Ctrl+I</kbd> / <kbd>Cmd+I</kbd>)</li>
+                <li>Paste it and say: “I’m getting this error. Please fix it.”</li>
+                <li>Accept the suggested changes and try again</li>
+            </ol>
+            <p class="mt-4">You do not need to decode the error yourself. You need to show it to the assistant. When the local app feels solid, you are ready to put SkillSwap on the internet.</p>
+        </section>
+
+        <nav class="page-footer" aria-label="Page">
+            <a href="setup.html">← Back: Setup</a>
+            <a href="deploy.html">Next: Deploy →</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

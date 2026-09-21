@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reference - SkillSwap Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#db2777',
+                        cream: '#ffffff',
+                        paper: '#fff5f8',
+                        ink: '#1f2937',
+                        heading: '#831843',
+                        coral: '#ec4899',
+                        gold: '#f9a8d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="site-nav" aria-label="Tutorial">
+        <a href="index.html" class="logo">Skill<span>Swap</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Introduction</a></li>
+            <li><a href="setup.html">Setup</a></li>
+            <li><a href="build.html">Build</a></li>
+            <li><a href="deploy.html">Deploy</a></li>
+            <li><a href="reference.html" class="current">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary mb-2">Page 5 of 5</p>
+        <h1>Next steps and troubleshooting</h1>
+        <p class="lede mt-4">The first version is a campus bulletin board that works. This page is your desk reference: how to change SkillSwap, what to add next, and what to do when something breaks.</p>
+
+        <section id="changes" class="mt-12">
+            <h2>5.1 Making changes to SkillSwap</h2>
+            <p class="mt-4">You do not rebuild from scratch every time. You describe the next slice, test it on your computer, then publish.</p>
+            <ol class="pretty mt-4">
+                <li><strong>Change it in Cursor.</strong> Open your <code>skillswap</code> project and tell Agent what you want.</li>
+                <li><strong>Test locally.</strong> Run <code>npm run dev</code> and check <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a>.</li>
+                <li><strong>Push to GitHub.</strong> Use Cursor’s source control panel or ask Agent to push.</li>
+                <li><strong>Wait for Vercel.</strong> It detects the push and redeploys in a couple of minutes.</li>
+            </ol>
+            <pre><code class="language-bash">npm run dev</code></pre>
+        </section>
+
+        <section id="ideas" class="mt-14">
+            <h2>5.2 Ideas for features to add</h2>
+            <p class="mt-4">Stay inside the bootcamp fence: no file uploads, no chat, no payments, no extra email, no AI matching. These additions still make SkillSwap feel more finished:</p>
+            <ul class="pretty mt-4">
+                <li><strong>Edit or delete your posts.</strong> Maya should be able to update “presentation due next week” when the date changes.</li>
+                <li><strong>Mark a request resolved.</strong> Close a post when you already found help so Discover stays useful.</li>
+                <li><strong>Filter matches by college.</strong> Sometimes you want someone in your school; sometimes you want anyone on campus.</li>
+                <li><strong>An interests inbox.</strong> A simple list of people who expressed interest in you, with accept and decline.</li>
+            </ul>
+            <p class="mt-4">Talk to Cursor the way you would brief a teammate:</p>
+            <div class="callout mt-4">
+                <p>“I want students to edit posts they created. Add an Edit button on My Posts that opens a form already filled with the title, skill, description, and status.”</p>
+            </div>
+        </section>
+
+        <section id="faq" class="mt-14">
+            <h2>5.3 Troubleshooting</h2>
+            <p class="mt-4">Click a question to open it. Only one stays open at a time so the page stays calm.</p>
+
+            <div class="accordion mt-6">
+                <button type="button" class="accordion-header">I see a blank page <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Open the browser developer console: right-click the page → Inspect → Console. Look for red errors. Copy them and ask Cursor to fix the issue. A blank Discover page can also mean the app loaded but your tables are empty or Row Level Security is blocking reads.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">npm run dev shows an error <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Read the message — it often names a missing package or a typo. A common fix is to run <code>npm install</code> in the project folder, then try <code>npm run dev</code> again. If it still fails, paste the full error into Agent: “I’m getting this error when running npm run dev: [paste error]”</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">My app works locally but not on Vercel <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Check that <code>NEXT_PUBLIC_SUPABASE_URL</code> and <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code> are set in the Vercel project. Read the build logs for red text. Confirm every file was pushed to GitHub. Add your Vercel URL in Supabase → Authentication → URL Configuration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">Login isn’t working <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Confirm the Project URL and Publishable key. Use a real email you can open. Check spam for the 6-digit code. In Supabase, open Authentication → Users to see whether the account was created. If it works on localhost but not on the live site, the Site URL / Redirect URL is probably still set to localhost.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">My changes aren’t showing up on the live site <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Did you push to GitHub? Open the repository and look at the latest commit. Vercel may need 1–2 minutes. Then hard-refresh the browser (<kbd>Ctrl+Shift+R</kbd> on Windows, <kbd>Cmd+Shift+R</kbd> on Mac) so you are not looking at an old cached page.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">Discover is empty even after I posted <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Open Supabase → Table Editor and see whether a row exists in <code>posts</code>. If the row is there but the site is empty, RLS is probably too strict (other students cannot <code>select</code> open posts). Ask Cursor to review the policies so logged-in users can read campus-wide posts and profiles, while still only editing their own.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">Matches never appear <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Complementary matching needs two sides. On one account, offer Python and want presentation design. On another, offer presentation design and want Python. Skill names must match closely (avoid “Python 3” vs “python programming” in the first version). If both profiles look right in Table Editor, ask Cursor to walk through the match query with you.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <button type="button" class="accordion-header">I want to start over <span class="accordion-icon">+</span></button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>You can delete the Vercel project and the GitHub repository, create a new <code>skillswap</code> folder, and run the build prompt again. That is a normal beginner move. Your Supabase project can stay; just keep using the same Project URL and Publishable key, or create a fresh project if the tables feel messy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="learn-more" class="mt-14">
+            <h2>5.4 Learning more</h2>
+            <p class="mt-4">You do not need these to use SkillSwap. They are here if you get curious about the dining room, the kitchen, or the paint colors.</p>
+            <ul class="pretty mt-4">
+                <li><a href="https://nextjs.org/docs" target="_blank" rel="noopener">Next.js documentation</a> — the frontend framework</li>
+                <li><a href="https://supabase.com/docs" target="_blank" rel="noopener">Supabase documentation</a> — database and auth</li>
+                <li><a href="https://tailwindcss.com/docs" target="_blank" rel="noopener">Tailwind CSS documentation</a> — styling</li>
+                <li><a href="https://react.dev" target="_blank" rel="noopener">React documentation</a> — the UI library under Next.js</li>
+            </ul>
+            <p class="mt-6">You directed an AI to build a real product with accounts, saved data, and a public URL. That is a founder skill. Come back to this page whenever SkillSwap needs another increment.</p>
+        </section>
+
+        <nav class="page-footer" aria-label="Page">
+            <a href="deploy.html">← Back: Deploy</a>
+            <a href="index.html">Back to Introduction</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

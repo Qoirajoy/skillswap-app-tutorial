@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction - SkillSwap Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#db2777',
+                        cream: '#ffffff',
+                        paper: '#fff5f8',
+                        ink: '#1f2937',
+                        heading: '#831843',
+                        coral: '#ec4899',
+                        gold: '#f9a8d4',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="site-nav" aria-label="Tutorial">
+        <a href="index.html" class="logo">Skill<span>Swap</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="current">Introduction</a></li>
+            <li><a href="setup.html">Setup</a></li>
+            <li><a href="build.html">Build</a></li>
+            <li><a href="deploy.html">Deploy</a></li>
+            <li><a href="reference.html">Reference</a></li>
+        </ul>
+    </nav>
+
+    <main class="page">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary mb-2">Page 1 of 5</p>
+        <div class="hero-blob">
+            <h1>Welcome to your SkillSwap tutorial</h1>
+        </div>
+        <p class="lede mt-4">You are about to build a real campus product — not a homework mockup that lives only on your laptop. By the end of this guide, SkillSwap will be live on the internet, and anyone with the link can use it.</p>
+
+        <section id="welcome" class="mt-12">
+            <h2>1.1 You do not need to write the code yourself</h2>
+            <p class="mt-4">You are a business student. You have never written code before. That is exactly who this tutorial is for.</p>
+            <p class="mt-4">You will not memorize syntax or fight a blank file. You will <strong>direct an AI assistant in Cursor</strong>: describe what SkillSwap should do, review what it builds, and ask it to fix problems in plain English. Think of yourself as the founder and product manager. Cursor is the engineering intern who types quickly and never gets tired.</p>
+            <div class="callout mt-6">
+                <p class="callout-title">What “done” looks like</p>
+                <p>A working SkillSwap site where students create accounts, list skills they can offer and skills they need, post help requests and skill offers, and find complementary matches — hosted online for free.</p>
+            </div>
+        </section>
+
+        <section id="what-we-are-building" class="mt-14">
+            <h2>1.2 What you are building</h2>
+            <p class="mt-4"><strong>SkillSwap</strong> is a university-wide platform that helps students find other students with the skills they need — and offer their own skills in return. Every student can be a helper and a requester at the same time. There are no separate roles.</p>
+            <p class="mt-4">College students already ask friends, classmates, or people in their major for help. That keeps talent trapped inside small networks. SkillSwap opens the bulletin board to the whole university: a Business student who needs presentation design can find an Engineering student who loves making slides — and maybe that same Engineering student needs Python, which the Business student can teach.</p>
+            <p class="mt-4">Here is a simple picture of what people will see. This is a sketch, not the final design, but it is close enough to hold in your head.</p>
+
+            <div class="mt-8 space-y-4">
+                <div class="mockup-board">
+                    <p class="text-xs font-semibold uppercase tracking-wide text-heading mb-3">Discover</p>
+                    <div class="grid gap-3 md:grid-cols-2">
+                        <article class="mockup-card">
+                            <span class="pill pill-request">Help request</span>
+                            <h3 class="text-lg mt-2 mb-1">Need help with presentation design</h3>
+                            <p class="text-sm text-gray-600">Maya · Business · “I have a 10-minute class talk next week. The research is done — I want the slides to look sharper.”</p>
+                        </article>
+                        <article class="mockup-card">
+                            <span class="pill pill-offer">Skill offer</span>
+                            <h3 class="text-lg mt-2 mb-1">I can help with Python</h3>
+                            <p class="text-sm text-gray-600">Maya · “I use Python for basic data analysis and can walk someone through a first project.”</p>
+                        </article>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <span class="pill pill-coral">Filter: College of Engineering</span>
+                        <span class="pill pill-offer">Search: Excel</span>
+                    </div>
+                </div>
+
+                <div class="card-grid">
+                    <article class="mockup-board">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-heading mb-3">My profile</p>
+                        <div class="mockup-card">
+                            <p class="font-semibold text-heading">Maya Chen</p>
+                            <p class="text-sm text-gray-600">Business · Junior · College of Business</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="pill pill-offer">Offers: Python</span>
+                                <span class="pill pill-request">Wants: Presentation design</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="mockup-board">
+                        <p class="text-xs font-semibold uppercase tracking-wide text-heading mb-3">A match</p>
+                        <div class="mockup-card">
+                            <p class="font-semibold text-heading">Potential SkillSwap</p>
+                            <p class="text-sm text-gray-600 mt-2">Maya needs presentation design and offers Python. Alex offers presentation design and needs Python. You may be able to help each other.</p>
+                            <p class="mt-3"><span class="pill pill-coral">Express interest</span></p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <p class="mt-6">This is a real app. Friends can make accounts. A classmate can post a request for Excel help. You can find a match that would never have appeared in your group chat.</p>
+        </section>
+
+        <section id="concepts" class="mt-14">
+            <h2>1.3 Understanding dynamic web apps</h2>
+            <p class="mt-4">Before you click any installers, you need a mental model. Software feels mysterious only when you do not know where things live. Once you know that, every later step will make more sense.</p>
+
+            <h3 class="mt-8">What is a web app?</h3>
+            <p class="mt-4">A <strong>website</strong> is mostly a brochure. A restaurant menu page shows the same dishes to everyone. You read it, maybe click a phone number, and leave. Nothing is saved about <em>you</em>.</p>
+            <p class="mt-4">A <strong>web app</strong> is a tool. Google Docs is a web app: you sign in, create documents, and they are still there tomorrow. SkillSwap is a web app because students create accounts, save profiles, post requests, and come back later to see matches.</p>
+            <p class="mt-4">The difference is <em>state</em> — remembered information. Your app has to remember Maya’s Python offer even after she closes her laptop.</p>
+
+            <h3 class="mt-8">The client-server model</h3>
+            <p class="mt-4">Imagine a restaurant. The dining room is where guests sit, read the menu, and place orders. The kitchen stores ingredients and prepares food. Guests never walk into the kitchen. They talk to a waiter, who carries the order back and returns with a plate.</p>
+            <p class="mt-4">Web apps work the same way:</p>
+            <ul class="pretty mt-4">
+                <li><strong>Frontend (the client)</strong> = the dining room. It is what students see in the browser: buttons, forms, the Discover feed, skill pills.</li>
+                <li><strong>Backend (the server)</strong> = the kitchen. It stores profiles, posts, and login information. Users never see it directly.</li>
+                <li><strong>API</strong> = the waiter. It carries a request (“show me open Excel offers”) from the frontend to the backend, then brings the answer back.</li>
+            </ul>
+            <p class="mt-4">For SkillSwap, you can also picture a campus bulletin board. Discover is the board students walk up to. Supabase is the student-life office that keeps every flyer on file so the board is not empty when someone new walks in.</p>
+
+            <h3 class="mt-8">Why do you need both?</h3>
+            <p class="mt-4"><strong>Data persistence.</strong> If Maya’s help request lived only in her browser, it would vanish when she closed the tab. Alex would never see it. The backend stores it permanently.</p>
+            <p class="mt-4"><strong>Multiple users.</strong> Maya and Alex need to look at the <em>same</em> set of posts. That shared truth has to live in one central place — the database — not on each person’s phone.</p>
+            <p class="mt-4"><strong>Security.</strong> You do not want a student to quietly edit someone else’s profile or delete another person’s request. Permission checks happen on the backend, where users cannot tamper with the rules. In Supabase those rules are called <strong>Row Level Security</strong> (RLS): tiny policies that say “you may only change rows that belong to you.”</p>
+
+            <h3 class="mt-8">What this means for SkillSwap</h3>
+            <ul class="pretty mt-4">
+                <li>The frontend will be built with <strong>React</strong> through <strong>Next.js</strong> — a popular way to build interactive pages.</li>
+                <li>The backend will be <strong>Supabase</strong> — a service that already gives you a database and user accounts. You are not building a kitchen from plywood.</li>
+                <li>Students log in with an email one-time code (a 6-digit code), so nobody has to invent and remember a password.</li>
+            </ul>
+        </section>
+
+        <section id="tools" class="mt-14">
+            <h2>1.4 The tools you will use</h2>
+            <p class="mt-4">Five tools. Each one has a job. You do not need to master them — you need to know why they exist.</p>
+            <div class="overflow-x-auto mt-6">
+                <table class="tools-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>What it does</th>
+                            <th>Analogy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cursor</strong></td>
+                            <td>An AI-powered code editor that writes and edits code from your instructions</td>
+                            <td>Your coding assistant</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Next.js</strong></td>
+                            <td>A framework for building the frontend students see</td>
+                            <td>The blueprint for the dining room</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Supabase</strong></td>
+                            <td>Stores profiles, posts, matches, and handles login</td>
+                            <td>Your kitchen, fully staffed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vercel</strong></td>
+                            <td>Puts SkillSwap on the public internet</td>
+                            <td>The building that houses the restaurant</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GitHub</strong></td>
+                            <td>Stores and versions your project files</td>
+                            <td>A filing cabinet for the blueprints</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-6">All of these have free plans that are enough for a student project. You will create the accounts on the next page.</p>
+        </section>
+
+        <nav class="page-footer" aria-label="Page">
+            <span class="text-gray-400">You are at the start</span>
+            <a href="setup.html">Next: Setup →</a>
+        </nav>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
